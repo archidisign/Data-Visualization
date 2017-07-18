@@ -1,0 +1,3 @@
+#World Currency Change Map
+
+This D3 based project takes the OECD Exchange Rates dataset to calculate the annual currency exchange rate of 51 countries from 1960 to 2016. After cleaning and calculating the annual change values, the data is then mapped on a TopoJSON world map using the D3 JavaScript Library. In the world, there are 180 different currencies and 196 different countries. Furthermore, not all years were tracked by OECD when it comes to exchange rate. We are hence working with an incomplete dataset; the regions colored in grey. Please read the blog post for more detail on this project.
