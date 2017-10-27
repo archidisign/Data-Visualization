@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Currency World Map</title>
+    <style>
+      <link rel="stylesheet" type="text/css" href="myStyles.css" />
+    </style>
+</head>
+
+<body>
+  <div>
+    <p><b><font size="6" face="Digital, Arial, Helvetica, sans-serif" color= #ff0000> World Currency Change Map </font></b></p>
+    <p><font face="Digital, Arial, Helvetica, sans-serif">&emsp; This D3 based project takes the OECD Exchange Rates dataset to calculate the annual currency exchange rate of 51 countries from 1960 to 2016. After cleaning and calculating the annual change values, the data is then mapped on a TopoJSON world map using the D3 JavaScript Library. In the world, there are 180 different currencies and 196 different countries. Furthermore, not all years were tracked by OECD when it comes to exchange rate. We are hence working with an incomplete dataset; the regions colored in grey. Please read the blog post for more detail on this project. </font></p>
+  </div>
+  <div id="wrapper">  
+      <div id="map">
+        <div id="ui">
+            <output id="output">1950</output>
+            <input id="sequence" type='range' min="1950", max="2016", value="1950", step="1" >
+        </div>
+      </div>
+  </div>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="https://unpkg.com/simple-statistics@4.1.0/dist/simple-statistics.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script type="text/javascript" src="myScripts.js"></script>
+</body>
+</html>
