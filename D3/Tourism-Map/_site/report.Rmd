@@ -1,0 +1,36 @@
+## Introduction
+
+Github Link: <https://github.com/archidisign/Data-Visualization/tree/master/D3/Tourism-Map>
+
+## Understanding the Problem
+We are looking at both the arrival and departure numbers per year, per country. For this project, the comparison of the two datasets is a priority. In the future, it would be interesting to see how we can combine the two together.
+## Hypothesis and Assumptions
+
+## Data Cleaning
+Within the csv file, each row did not just represent a different country. Instead, aggregation by regions and total were also present. Hence, a first data cleaning was done in EXCEL to loop for these rows and remove them from the dataset. Furthermore, we needed to do different vlookup for the data analysis such that the various files loaded can be represented inside one big csv/dataframe. 
+```{r}
+arrival <- read.csv('arrivals.csv')
+arrival[is.na(arrival)]<-0
+rownames(arrival) <- arrival[,1]
+arrival[,1] <-NULL
+which(arrival==max(arrival), arr.ind=TRUE)
+
+departure <- read.csv('departures.csv')
+```
+
+## Heatmap
+Look at all time max and min for -> reason? year event?
+
+## Time series
+Look at top 10/lowest 10 for each year
+
+## Histogram and Data Distribution
+
+## Subplot with variance for Canada/USA/China
+
+# Linear Regression relation
+Correlation between regions/IncomeGroup (correlation matrix, Linear Regression model)
+
+## Predictions for trend into the future
+
+## Conclusion

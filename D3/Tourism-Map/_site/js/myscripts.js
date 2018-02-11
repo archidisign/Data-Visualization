@@ -13,12 +13,12 @@ var tip = d3.tip()
   })
 
 function ld1(){
-  deffile = "arrivals.csv"
+  deffile = "/data clean/arrivals.csv"
   defColor = '#000033'
   setMap();
 }
 function ld2(){
-  deffile = "departures.csv"
+  deffile = "/data clean/departures.csv"
   defColor = '#e59400'
   setMap();
 }
@@ -66,7 +66,7 @@ function setMap() {
 
 function loadData() {
   queue()   // queue function loads all external data files asynchronously 
-    .defer(d3.json, "world-topo.json")  // our geometries
+    .defer(d3.json, "/data geo/world-topo.json")  // our geometries
     .defer(d3.csv, deffile)  // and associated data in csv file
     .await(processData);   // once all files are loaded, call the processData function passing
                            // the loaded objects as arguments
@@ -164,26 +164,3 @@ function getDataRange() {
 })();
 
 window.onload = init();  // magic starts here
-
-
-
-
-// function arrayToTable(tableData) {
-//     var table = $('<table></table>');
-//     $(tableData).each(function (i, rowData) {
-//         var row = $('<tr></tr>');
-//         $(rowData).each(function (j, cellData) {
-//             row.append($('<td>'+cellData+'</td>'));
-//         });
-//         table.append(row);
-//     });
-//     return table;
-// }
-
-// $.ajax({
-//     type: "GET",
-//     url: "arrivals.csv",
-//     success: function (data) {
-//         $('body').append(arrayToTable(Papa.parse(data).data));
-//     }
-// });

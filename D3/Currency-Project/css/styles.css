@@ -1,0 +1,172 @@
+#wrapper {
+    width: 1000px;
+    margin: -30px auto 0;
+}
+#map {
+    top: 20%;
+    width: 1400px;
+    height: 600px;
+    position: absolute;
+}
+.stroke {
+  fill: none;
+  stroke: #888;
+  stroke-width: 2px;
+}
+
+.fill {
+  fill: #fff;
+}
+
+.graticule {
+  fill: none;
+  stroke: #777;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+
+.land {
+  fill: #222;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
+}
+.country {
+    stroke: white;
+    border: 20px solid black;
+}
+.country:hover {
+  stroke: #646464;
+  stroke-width:2px;
+  stroke-linejoin: round;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+#ui {
+    position: absolute;
+    left: 8px;
+    top:85%;
+}
+#ui output {
+    padding: 3px 6px;
+    margin: 0 0 8px 0;
+    width: 100px;
+    border: 1px solid gray;
+    display: block;
+    text-align: center;
+}
+#ui input {
+    width: 1000px;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#sequence {
+  -webkit-appearance: none;
+  width: 900px;
+  height: 10px;
+  border-radius: 5px;
+  background: #ccc;
+  outline: none;
+}
+#sequence::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #00FF00;
+  cursor: pointer;
+  -webkit-transition: background 0.15s ease-in-out;
+  transition: background 0.15s ease-in-out;
+}
+#sequence::-webkit-slider-thumb:hover {
+  background: #FF0000;
+}
+#sequence:active::-webkit-slider-thumb {
+  background: #FF0000;
+}
+#sequence::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  background: #00FF00;
+  cursor: pointer;
+  -webkit-transition: background 0.15s ease-in-out;
+  transition: background 0.15s ease-in-out;
+}
+#sequence::-moz-range-thumb:hover {
+  background: #FF0000;
+}
+#sequence:active::-moz-range-thumb {
+  background: #FF0000;
+}
+#output {
+  float: right;
+  display: inline-block;
+  position: relative;
+  width: 200px;
+  color: #fff;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 3px;
+  background: #00FF00;
+  padding: 3px 6px;
+  margin: 0 0 8px 0;
+}
+
+#output:after {
+  position: absolute;
+  top: 8px;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-right: 7px solid #00FF00;
+  border-bottom: 7px solid transparent;
+  content: "";
+}
+
+::-moz-range-track {
+  background: #ccc;
+  border: 0;
+}
+
+input::-moz-focus-inner {
+  border: 0;
+}
