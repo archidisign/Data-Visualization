@@ -15,26 +15,87 @@ We are looking at both the arrival and departure numbers per year, per country. 
 ## Data Cleaning
 Within the csv file, each row did not just represent a different country. Instead, aggregation by regions and total were also present. Hence, a first data cleaning was done in EXCEL to loop for these rows and remove them from the dataset. Furthermore, we needed to do different vlookup for the data analysis such that the various files loaded can be represented inside one big csv/dataframe. 
 ```{r}
-arrival <- read.csv('arrivals.csv')
-arrival[is.na(arrival)]<-0
-rownames(arrival) <- arrival[,1]
-arrival[,1] <-NULL
-which(arrival==max(arrival), arr.ind=TRUE)
-
-departure <- read.csv('departures.csv')
+#Define dataframe for arrival
+arrival <- read.csv('./data clean/arrivals_df.csv')
+arr_num <- arrival[, -24:-26]
+arr_num[is.na(arr_num)]<-0
+rownames(arr_num) <- arr_num[,1]
+arr_num[,1] <-NULL
+#Define dataframe for departure
+departure <- read.csv('./data clean/departures_df.csv')
+dep_num <- departure[, -24:-26]
+dep_num[is.na(dep_num)]<-0
+rownames(dep_num) <- dep_num[,1]
+dep_num[,1] <-NULL
 ```
 
-## Heatmap
-Look at all time max and min for -> reason? year event?
+## Find Max and Min
+```{r}
+#MAXIMUM for Arrival
+idx1 <- which(arr_num==max(arr_num), arr.ind = TRUE)
+print(c(rownames(arr_num)[idx1[1]], colnames(arr_num)[idx1[2]], arr_num[idx1]))
+#rbind(rownames(arr_num), colnames(arr_num)[apply(arr_num,1,which.max)])
 
-## Time series
-Look at top 10/lowest 10 for each year
+#MINIMUM for Arrival
+idx2 <- which(arr_num == min(arr_num[arr_num>0]), arr.ind = TRUE)
+print(c(rownames(arr_num)[idx2[1]], colnames(arr_num)[idx2[2]], arr_num[idx2]))
+
+#MAXIMUM for Departure
+idx1 <- which(dep_num==max(dep_num), arr.ind = TRUE)
+print(c(rownames(dep_num)[idx1[1]], colnames(dep_num)[idx1[2]], dep_num[idx1]))
+
+#MINIMUM for Departure
+idx2 <- which(dep_num == min(dep_num[dep_num>0]), arr.ind = TRUE)
+print(c(rownames(dep_num)[idx2[1]], colnames(dep_num)[idx2[2]], dep_num[idx2]))
+```
 
 ## Histogram and Data Distribution
+```{r}
+options("scipen"=100, "digits"=4)
+par(mfrow=c(1,2))
+hist(arr_num$X1995)
+hist(arr_num$X2015)
+```
+
+```{r}
+options("scipen"=100, "digits"=4)
+par(mfrow=c(1,2))
+hist(dep_num$X1995)
+hist(dep_num$X2015)
+```
+## World Map Visualization
+
+## Time series
+
+## Heatmap
+As there are 217 countries in our dataset and it makes the analytics extremely difficult, I have decided to only focus on the top 20 most active countries (20 highest arrival or departure rate respectively).
+Look at all time max and min for -> reason? year event?
+```{r fig2, fig.width = 20, fig.align = "center"}
+library("RColorBrewer")
+arr_temp <- arr_num
+arr_temp$total <- rowSums(arr_temp)
+arr_temp <- head(arr_temp[order(arr_temp$total, decreasing= T),], n = 20)
+arrival_matrix <- data.matrix(arr_temp)
+arrival_heat <- heatmap(arrival_matrix, Rowv=NA, Colv=NA, col = brewer.pal(9, "Blues"), scale="column", margins=c(5,10))
+```
+
+```{r fig.width = 25, fig.align = "center"}
+dep_temp <- dep_num
+dep_temp$total <- rowSums(dep_temp)
+dep_temp <- head(dep_temp[order(dep_temp$total, decreasing= T),], n = 20)
+departure_matrix <- data.matrix(dep_temp)
+departure_heat <- heatmap(departure_matrix, Rowv=NA, Colv=NA, col = brewer.pal(9, "Oranges"), scale="column", margins=c(5,10))
+```
+
+## Boxplot Per Year
+```{r}
+boxplot(arr_num, main = "Arrival Data Boxplots Per Year", notch = TRUE, col = 1:20)
+boxplot(dep_num, main = "Departure Data Boxplots Per Year", notch = FALSE, col = 1:20)
+```
 
 ## Subplot with variance for Canada/USA/China
 
-# Linear Regression relation
+## Linear Regression relation
 Correlation between regions/IncomeGroup (correlation matrix, Linear Regression model)
 
 ## Predictions for trend into the future
