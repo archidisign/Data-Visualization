@@ -1,16 +1,16 @@
-//globals
+
 var width, height, projection, path, graticule, svg, attributeArray = [], currentAttribute = 0, playing = false;
 var width = 1500, height = 500;
-//var formatPercent = d3.format(".0%");
+
 var deffile;
 var color = d3.scale.category20b();
 
 function ld1(){
-  deffile = "/data clean/arrival_test.csv"
+  deffile = "/data/arrival_rev.csv"
   start();
 }
 function ld2(){
-  deffile = "/data clean/departure_test.csv"
+  deffile = "/data/departure_rev.csv"
   start();
 }
 
@@ -21,11 +21,11 @@ function init() {
 function start() {
   Plotly.d3.csv(deffile, function(data){
     function unpack(data, key, ind) {
-      if(ind == 1){ //return the column
+      if(ind == 1){ 
         return data.map(function(row){return row[key]; });
       }
-      else{ //return the row
-        //return data.filter(function(row){return row[0]=='id'; });
+      else{ 
+        
         return d3.keys(data[0]).filter(function(col) { return (col !== "id");});
       }
     }

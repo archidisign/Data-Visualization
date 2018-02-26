@@ -109,7 +109,7 @@
 }
 
 #ui {
-    position: absolute;
+    position: fixed;
     left: 8px;
     top:85%;
     margin: auto;

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>World Tourism Arrival and Departure Dataset Analysis</title>
+
+<script src="report_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="report_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="report_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="report_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="report_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="report_files/navigation-1.1/tabsets.js"></script>
+<link href="report_files/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="report_files/highlightjs-1.1/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">World Tourism Arrival and Departure Dataset Analysis</h1>
+<h4 class="date"><em>February 2018</em></h4>
+
+</div>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In 2017, I was able to travel a lot around the world. Going to some of the most visited cities in the world including Paris, Rome, Singapore, Bangkok and Hong Kong. This made me curious to see how tourism has evolved with time and which countries benefit the most from this global industry. As I have previously worked with D3.js to visualize world data, I thought this would be the perfect continuation to my data science adventure. I decided to write my code and analysis in R Markdown so that I can practice my data presentation skills. All works are hosted on my personal website and Github account.</p>
+<p>Github Link: <a href="https://github.com/archidisign/Data-Visualization/tree/master/D3/Tourism-Map" class="uri">https://github.com/archidisign/Data-Visualization/tree/master/D3/Tourism-Map</a></p>
+<p>Interactive D3 Visualization Link: <a href="https://archidisign.github.io/projects.html" class="uri">https://archidisign.github.io/projects.html</a></p>
+<div id="understanding-the-dataset" class="section level2">
+<h2>Understanding the Dataset</h2>
+<p>We have the dataset for both the arrival and departure numbers per year of each country. For this project, the comparison of the two datasets is a priority as they bring out very different, but important information. In the future, it would be interesting to see how we can visualize the two together. The dataset was prepared by the World Development Indicators and I have copied their methodology/definition on the README of this project.</p>
+</div>
+<div id="hypothesis-and-assumptions" class="section level2">
+<h2>Hypothesis and Assumptions</h2>
+<p>From experience, I am expecting countries in Europe like France and Italy to get the most arrival traction. Resort countries like Thailand and Cubo should also get a fair number of arrivals as they are popular choice for a relaxing vacation. As for departure, I am expecting Western countries like USA, UK and Canada to have the highest number of tourists going abroad over time. Furthermore, with the economic boom Asian countries received in the last decade, I would expect China’s new upper-middle class to contribute significantly to the tourism industry.</p>
+</div>
+</div>
+<div id="data-cleaning" class="section level1">
+<h1>Data Cleaning</h1>
+<p>Within the csv file, each row did not just represent a different country. Instead, aggregation by regions and total were also present. Hence, a first data cleaning was done in EXCEL to filter these rows out from the dataset. Furthermore, we needed to do different vlookup for the data analysis such that the various files loaded can be represented inside one big csv/dataframe.</p>
+<p>From there, the newly defined csv files are loaded into R.Some countries have missing data. If the dataset has a nan value, it is replaced by a 0. Furthermore, the last 3 columns are factors, not numerical values. Hence, in R, we want to exclude these from the initial part of our analysis (when we want to visualize histograms, find max/min, etc). Finally, the rownames are defined as the country names. This work is repeated twice, for both arrival and departure dataset.</p>
+<pre class="r"><code>#Define dataframe for arrival
+arrival &lt;- read.csv(&#39;./data clean/arrivals_R.csv&#39;)
+arrival[is.na(arrival)]&lt;-0
+arr_num &lt;- arrival[, -24:-26]
+rownames(arr_num) &lt;- arr_num[,1]
+arr_num[,1] &lt;-NULL
+#Define dataframe for departure
+departure &lt;- read.csv(&#39;./data clean/departures_R.csv&#39;)
+departure[is.na(departure)]&lt;-0
+dep_num &lt;- departure[, -24:-26]
+rownames(dep_num) &lt;- dep_num[,1]
+dep_num[,1] &lt;-NULL</code></pre>
+</div>
+<div id="data-exploration" class="section level1">
+<h1>Data Exploration</h1>
+<p>Below are some of the initial data visualization done to better visualize and understand the data at hand. In Data Science, this stage is called the Data Exploration. We are not sure in which direction to go with the project and visualizing the data in different ways allows us to know what to do next.</p>
+<div id="find-max-and-min" class="section level2">
+<h2>Find Max and Min</h2>
+<pre class="r"><code>#MAXIMUM for Arrival
+idx1 &lt;- which(arr_num==max(arr_num), arr.ind = TRUE)
+print(c(rownames(arr_num)[idx1[1]], colnames(arr_num)[idx1[2]], arr_num[idx1]))</code></pre>
+<pre><code>## [1] &quot;FRA&quot;      &quot;X2015&quot;    &quot;84452000&quot;</code></pre>
+<pre class="r"><code>#rbind(rownames(arr_num), colnames(arr_num)[apply(arr_num,1,which.max)])
+
+#MINIMUM for Arrival
+idx2 &lt;- which(arr_num == min(arr_num[arr_num&gt;0]), arr.ind = TRUE)
+print(c(rownames(arr_num)[idx2[1]], colnames(arr_num)[idx2[2]], arr_num[idx2]))</code></pre>
+<pre><code>## [1] &quot;TJK&quot;   &quot;X1996&quot; &quot;700&quot;</code></pre>
+<pre class="r"><code>#MAXIMUM for Departure
+idx1 &lt;- which(dep_num==max(dep_num), arr.ind = TRUE)
+print(c(rownames(dep_num)[idx1[1]], colnames(dep_num)[idx1[2]], dep_num[idx1]))</code></pre>
+<pre><code>## [1] &quot;CHN&quot;       &quot;X2015&quot;     &quot;116886000&quot;</code></pre>
+<pre class="r"><code>#MINIMUM for Departure
+idx2 &lt;- which(dep_num == min(dep_num[dep_num&gt;0]), arr.ind = TRUE)
+print(c(rownames(dep_num)[idx2[1]], colnames(dep_num)[idx2[2]], dep_num[idx2]))</code></pre>
+<pre><code>## [1] &quot;TUV&quot;   &quot;X1998&quot; &quot;1900&quot;</code></pre>
+<p>From the above, we see that France is the most popular country to visit, having 84,452,000 arrivals in 2015. Tajikistan, an Europe &amp; Central Asia Lower middle income country, is the least visited. Its smallest number was in 1996 when it received around 700 arrivals. Although uncertain yet, we may assume that overall, the number of both arrival and departure is increasing with years.</p>
+</div>
+<div id="histogram-and-data-distribution" class="section level2">
+<h2>Histogram and Data Distribution</h2>
+<pre class="r"><code>options(&quot;scipen&quot;=100, &quot;digits&quot;=4)
+par(mfrow=c(1,2))
+hist(arr_num$X1995, main=&#39;Distribution of arrivals in 1995&#39;, ylab=&#39;Number of arrivals&#39;)
+hist(arr_num$X2015, main=&#39;Distribution of arrivals in 2015&#39;, ylab=&#39;Number of arrivals&#39;)</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>options(&quot;scipen&quot;=100, &quot;digits&quot;=4)
+par(mfrow=c(1,2))
+hist(dep_num$X1995, main=&#39;Distribution of departures in 1995&#39;, ylab=&#39;Number of departures&#39;)
+hist(dep_num$X2015, main=&#39;Distribution of departures in 2015&#39;, ylab=&#39;Number of departures&#39;)</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-4-1.png" width="672" /> This shows us that the data is right skewed with only a few countries reaching the 20 millions count. It also seems to be unreasonable to do a prediction model based on a standard normal distribution. Even exponential and gamma distribution may be hard to tune onto these datasets.</p>
+</div>
+<div id="world-map-visualization" class="section level2">
+<h2>World Map Visualization</h2>
+<p><a href="https://archidisign.github.io/tourism-map/world_map.html" class="uri">https://archidisign.github.io/tourism-map/world_map.html</a></p>
+</div>
+<div id="time-series" class="section level2">
+<h2>Time series</h2>
+<p><a href="https://archidisign.github.io/tourism-map/time_series.html" class="uri">https://archidisign.github.io/tourism-map/time_series.html</a> ## Heatmap As there are 217 countries in our dataset and it makes the analytics extremely difficult, I have decided to only focus on the top 20 most active countries (20 highest arrival or departure rate respectively). Look at all time max and min for -&gt; reason? year event?</p>
+<pre class="r"><code>library(&quot;RColorBrewer&quot;)</code></pre>
+<pre><code>## Warning: package &#39;RColorBrewer&#39; was built under R version 3.3.2</code></pre>
+<pre class="r"><code>arr_temp &lt;- arr_num
+arr_temp$total &lt;- rowSums(arr_temp)
+arr_temp &lt;- head(arr_temp[order(arr_temp$total, decreasing= T),], n = 20)
+arrival_matrix &lt;- data.matrix(arr_temp)
+arrival_heat &lt;- heatmap(arrival_matrix, Rowv=NA, Colv=NA, col = brewer.pal(9, &quot;Blues&quot;), scale=&quot;column&quot;, margins=c(5,10))</code></pre>
+<p><img src="report_files/figure-html/fig2-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>dep_temp &lt;- dep_num
+dep_temp$total &lt;- rowSums(dep_temp)
+dep_temp &lt;- head(dep_temp[order(dep_temp$total, decreasing= T),], n = 20)
+departure_matrix &lt;- data.matrix(dep_temp)
+departure_heat &lt;- heatmap(departure_matrix, Rowv=NA, Colv=NA, col = brewer.pal(9, &quot;Oranges&quot;), scale=&quot;column&quot;, margins=c(5,10))</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-5-1.png" width="2400" style="display: block; margin: auto;" /></p>
+</div>
+<div id="boxplot-per-year" class="section level2">
+<h2>Boxplot Per Year</h2>
+<pre class="r"><code>boxplot(arr_num, main = &quot;Arrival Data Boxplots Per Year&quot;, notch = TRUE, col = 1:20)</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>boxplot(dep_num, main = &quot;Departure Data Boxplots Per Year&quot;, notch = FALSE, col = 1:20)</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+</div>
+<div id="correlation-between-arrival-vs-departure" class="section level2">
+<h2>Correlation between arrival vs departure</h2>
+<pre class="r"><code>x &lt;- arrival$X1995
+y &lt;- departure$X1995
+plot(x, y, xlab=&#39;Number of arrivals&#39;, ylab=&#39;Number of departures&#39;, xlim=c(0, 2000000), ylim=c(0, 2000000))</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>x &lt;- arrival$X2015
+y &lt;- departure$X2015
+plot(x, y, xlab=&#39;Number of arrivals&#39;, ylab=&#39;Number of departures&#39;, xlim=c(0, 2000000), ylim=c(0, 2000000))</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+</div>
+<div id="linear-regression-relation" class="section level2">
+<h2>Linear Regression relation</h2>
+<p>Correlation between regions/IncomeGroup (correlation matrix, Linear Regression model)</p>
+<pre class="r"><code>arrival$Region&lt;-as.factor(arrival$Region)
+arrival$IncomeGroup&lt;-as.factor(arrival$IncomeGroup)
+arrival$CountryName&lt;-as.factor(arrival$CountryName)
+fit1&lt;-lm(X1995~Region,data=arrival)
+summary(fit1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = X1995 ~ Region, data = arrival)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -19825333  -1754597   -500000    -36597  55028421 
+## 
+## Coefficients:
+##                                  Estimate Std. Error t value  Pr(&gt;|t|)    
+## (Intercept)                       1796597    1013906    1.77     0.078 .  
+## RegionEurope &amp; Central Asia       3207982    1297615    2.47     0.014 *  
+## RegionLatin America &amp; Caribbean   -677597    1390551   -0.49     0.627    
+## RegionMiddle East &amp; North Africa  -601074    1685009   -0.36     0.722    
+## RegionNorth America              18415736    3702263    4.97 0.0000014 ***
+## RegionSouth Asia                 -1328622    2404690   -0.55     0.581    
+## RegionSub-Saharan Africa         -1546910    1349232   -1.15     0.253    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6170000 on 210 degrees of freedom
+## Multiple R-squared:  0.176,  Adjusted R-squared:  0.153 
+## F-statistic: 7.49 on 6 and 210 DF,  p-value: 0.000000278</code></pre>
+<pre class="r"><code>anova(fit1)</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: X1995
+##            Df           Sum Sq         Mean Sq F value     Pr(&gt;F)    
+## Region      6 1708844044081180 284807340680197    7.49 0.00000028 ***
+## Residuals 210 7987608202537167  38036229535891                       
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>From the above tables, we can see that the p-value for the regions is extremely small. Based on the global F-test, there is a significant difference between the number of arrivals between geographical regions. To assess the validy of models bsed on regions, we will need to look at the residual plots.</p>
+<pre class="r"><code>unique(arrival$Region)</code></pre>
+<pre><code>## [1] Latin America &amp; Caribbean  South Asia                
+## [3] Sub-Saharan Africa         Europe &amp; Central Asia     
+## [5] Middle East &amp; North Africa East Asia &amp; Pacific       
+## [7] North America             
+## 7 Levels: East Asia &amp; Pacific ... Sub-Saharan Africa</code></pre>
+<pre class="r"><code>res.data&lt;-data.frame(res=residuals(fit1), Region=arrival$Region)
+par(mar=c(4,4,1,2))
+stripchart(res~Region,res.data,pch=19,vertical=T,xlab=&#39;Region&#39;, las=2)
+abline(h=0,lty=2)</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-9-1.png" width="672" /> This residual plot shows us that the East Asia &amp; Pacific and the South Asia are the two regions with the smallest variabce.</p>
+</div>
+<div id="forecasting-models" class="section level2">
+<h2>Forecasting Models</h2>
+<ol style="list-style-type: decimal">
+<li>Try main effect model: Region+IncomeGroup+CountryName</li>
+<li>Etc.. A4Q3 ## Predictions for trend into the future</li>
+</ol>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
