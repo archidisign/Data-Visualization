@@ -1,0 +1,43 @@
+html,body {
+  height: 100%;
+  width: 100%;
+  margin:0; padding:0;
+  z-index: 1;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+p, a, h3 {
+	color: #FFFFFF;
+	font-family: "Courier New", serif;
+}
+p {
+	font-size: 14px;
+	width: 250px;
+}
+
+.links line {
+  stroke: #999;
+  stroke-opacity: 0.6;
+}
+
+.nodes circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.column_1 {
+    float: left;
+    width: 20%;
+}
+
+.column_2 {
+    float: left;
+    width: 80%;
+}
+
+/* Clear floats after the columns */
+.row: after {
+    content: "";
+    display: table;
+    clear: both;
+}
