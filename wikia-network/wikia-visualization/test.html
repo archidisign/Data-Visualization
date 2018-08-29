@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+	This live preview for <a href="http://en.wikipedia.org/">Wikipedia</a>
+	<iframe class="box" src="http://en.wikipedia.org/" width = "500px" height = "500px"></iframe> remains open on mouseover.
+</body>
+<style>
+	.box{
+	    display: none;
+	    width: 100%;
+	}
+
+	a:hover + .box,.box:hover{
+	    display: block;
+	    position: relative;
+	    z-index: 100;
+	}
+</style>
+</html>

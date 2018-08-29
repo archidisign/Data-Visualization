@@ -1,7 +1,7 @@
 html,body {
   height: 100%;
   width: 100%;
-  margin:0; padding:0;
+  margin:5; padding:0;
   z-index: 1;
   max-width: 100%;
   overflow-x: hidden;
@@ -9,6 +9,7 @@ html,body {
 p, a, h3 {
 	color: #FFFFFF;
 	font-family: "Courier New", serif;
+  margin: 10px;
 }
 p {
 	font-size: 14px;
@@ -25,6 +26,20 @@ p {
   stroke-width: 1.5px;
 }
 
+.link {
+  stroke: #aaa;
+}
+
+.node text {
+  stroke:#FFFFFF;
+  cursos:pointer;
+}
+
+.node circle {
+  stroke:#fff;
+  stroke-width:2px;
+}
+
 .column_1 {
     float: left;
     width: 20%;
@@ -35,9 +50,24 @@ p {
     width: 80%;
 }
 
-/* Clear floats after the columns */
 .row: after {
     content: "";
     display: table;
     clear: both;
+}
+
+.box{
+    display: none;
+    width: 100%;
+}
+
+a:hover + .box,.box:hover{
+    display: block;
+    position: relative;
+    z-index: 100;
+}
+
+iframe {
+  height: 500px;
+  width: 500px;
 }
