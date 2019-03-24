@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Montreal STM Stations</title>
+    <script type="text/javascript" src="./d3/d3.v3.js"></script>
+    <style type="text/css">
+      /* No style rules here yet */
+      svg {
+		    display: block;
+		    margin: 0 auto;
+		}
+    </style>
+  </head>
+  <body>
+  	<div id="example3">
+        <p><b><font size="6" face="Digital, Arial, Helvetica, sans-serif" color= #ff0000> Force Layout of Montreal STM Stations</font></b></p>
+        <p><font face="Digital, Arial, Helvetica, sans-serif">&emsp; The "Société de transport de Montréal" aka STM has 68 metro stations, divided on 4 lines:orange, blue, green and yellow. Each transit line has a unique set of stations that forms it. Using the D3 Force Layout library, this project gives a different interpretation of the complex metro network in Montreal (Canada).</font></p>
+     </div>
+    <script type="text/javascript">
+    	var w = 1200;
+		var h = 500;
+		var dataset = {
+			nodes:[
+				 { name: "Station Cote Vertu", group:"orange"}, //0
+		         { name: "Station Du College", group:"orange"}, //1
+		         { name: "Station De La Savane", group:"orange"}, //2
+		         { name: "Station Namur", group:"orange"}, //3
+		         { name: "Station Plamondon", group:"orange" }, //4
+		         { name: "Station Cote-Sainte-Catherine", group:"orange" }, //5
+		         { name: "Station Snowdon", group:"black" },//6
+		         { name: "Station Villa-Maria", group:"orange" },//7
+		         { name: "Station Vendome", group:"orange" }, //8
+		         { name: "Station Place-Saint-Henri", group:"orange" }, //9
+		         { name: "Station Lionel-Groulx", group:"black" }, //10
+		         { name: "Station Georges-Vanier", group:"orange" }, //11
+		         { name: "Station Lucien-L'Allier", group:"orange" }, //12
+		         { name: "Station Bonaventure", group:"orange" }, //13
+		         { name: "Station Square-Victoria-OACI", group:"orange" }, //14
+		         { name: "Station Place-d'Armes", group:"orange" }, //15
+		         { name: "Station Champ-de-Mars", group:"orange"}, //16
+		         { name: "Station Berri-UQAM", group:"black" }, //17
+		         { name: "Station Sherbrooke", group:"orange" }, //18
+		         { name: "Station Mont-Royal", group:"orange" }, //19
+		         { name: "Station Laurier", group:"orange" }, //20
+		         { name: "Station Rosemont", group:"orange" }, //21
+		         { name: "Station Beaubien", group:"orange" }, //22
+		         { name: "Station Jean-Talon", group:"black" }, //23
+		         { name: "Station Jarry", group:"orange" }, //24
+		         { name: "Station Cremazie", group:"orange" }, //25
+		         { name: "Station Sauve", group:"orange" }, //26
+		         { name: "Station Henri-Bourassa", group:"orange" }, //27
+		         { name: "Station Cartier", group:"orange" }, //28
+		         { name: "Station De la Concorde", group:"orange" }, //29
+		         { name: "Station Montmorency", group:"orange" }, //30
+		         { name: "Station Cote-Des-Neiges", group:"blue" }, //31
+		         { name: "Station Universite-de-Montreal", group:"blue" }, //32
+		         { name: "Station Edouard-Montpetit", group:"blue" }, //33
+		         { name: "Station Acadie", group:"blue" }, //34
+		         { name: "Station Parc", group:"blue" }, //35
+		         { name: "Station de Castelnau", group:"blue" }, //36
+		         { name: "Station Fabre", group:"blue" }, //37
+		         { name: "Station D'Iberville", group:"blue" }, //38
+		         { name: "Station Saint-Michel", group:"blue" }, //39
+		         { name: "Station Angrignon", group:"green" }, //40
+		         { name: "Station Monk", group:"green" }, //41
+		         { name: "Station Jolicoeur", group:"green" }, //42
+		         { name: "Station Verdun", group:"green" }, //43
+		         { name: "Station De L'Eglise", group:"green" }, //44
+		         { name: "Station Lasalle", group:"green" }, //45
+		         { name: "Station Charlevoix", group:"green" }, //46
+		         { name: "Station Atwater", group:"green" }, //47
+		         { name: "Station Guy-Concordia", group:"green" }, //48
+		         { name: "Station Peel", group:"green" }, //49
+		         { name: "Station McGill", group:"green" }, //50
+		         { name: "Station Place-des-Arts", group:"green" }, //51
+		         { name: "Station Saint-Laurent", group:"green" }, //52
+		         { name: "Station Beaudry", group:"green" }, //53
+		         { name: "Station Papineau", group:"green" }, //54
+		         { name: "Station Frontenac", group:"green" }, //55
+		         { name: "Station Prefontaine", group:"green" }, //56
+		         { name: "Station Joliette", group:"green" }, //57
+		         { name: "Station Pie-IX", group:"green" }, //58
+		         { name: "Station Viau", group:"green" }, //59
+		         { name: "Station Assomption", group:"green" }, //60
+		         { name: "Station Cadillac", group:"green" }, //61
+		         { name: "Station Langelier", group:"green" }, //62
+		         { name: "Station Radison", group:"green" }, //63
+		         { name: "Station Honore-Beaugrant", group:"green" }, //64
+		         { name: "Station Jean-Drapeau", group:"yellow" }, //65
+		         { name: "Station Longueil-Universite-de-Sherbrooke", group:"yellow" } //66
+			],
+			edges:[
+					 { source: 0, target: 1 },
+			         { source: 1, target: 2 },
+			         { source: 2, target: 3 },
+			         { source: 3, target: 4 },
+			         { source: 4, target: 5 },
+			         { source: 5, target: 6 },
+			         { source: 6, target: 7 },
+			         { source: 7, target: 8 },
+			         { source: 8, target: 9 },
+			         { source: 9, target: 10 },
+			         { source: 10, target: 11 },
+			         { source: 11, target: 12 },
+			         { source: 12, target: 13 },
+			         { source: 13, target: 14 },
+			         { source: 14, target: 15 },
+			         { source: 15, target: 16 },
+			         { source: 16, target: 17 },
+			         { source: 17, target: 18 },
+			         { source: 18, target: 19 },
+			         { source: 19, target: 20 },
+			         { source: 20, target: 21 },
+			         { source: 21, target: 22 },
+			         { source: 22, target: 23 },
+			         { source: 23, target: 24 },
+			         { source: 24, target: 25 },
+			         { source: 25, target: 26 },
+			         { source: 26, target: 27 },
+			         { source: 27, target: 28 },
+			         { source: 28, target: 29 },
+			         { source: 29, target: 30 },
+			         { source: 6, target: 31 },
+			         { source: 31, target: 32 },
+			         { source: 32, target: 33 },
+			         { source: 33, target: 34 },
+			         { source: 34, target: 35 },
+			         { source: 35, target: 36 },
+			         { source: 36, target: 23 },
+			         { source: 23, target: 37 },
+			         { source: 37, target: 38 },
+			         { source: 38, target: 39 },
+			         { source: 40, target: 41 },
+			         { source: 41, target: 42 },
+			         { source: 42, target: 43 },
+			         { source: 43, target: 44 },
+			         { source: 44, target: 45 },
+			         { source: 45, target: 46 },
+			         { source: 46, target: 10 },
+			         { source: 10, target: 47 },
+			         { source: 47, target: 48 },
+			         { source: 48, target: 49 },
+			         { source: 49, target: 50 },
+			         { source: 50, target: 51 },
+			         { source: 51, target: 52 },
+			         { source: 52, target: 17 },
+			         { source: 17, target: 53 },
+			         { source: 53, target: 54 },
+			         { source: 54, target: 55 },
+			         { source: 55, target: 56 },
+			         { source: 56, target: 57 },
+			         { source: 57, target: 58 },
+			         { source: 58, target: 59 },
+			         { source: 59, target: 60 },
+			         { source: 60, target: 61 },
+			         { source: 61, target: 62 },
+			         { source: 62, target: 63 },
+			         { source: 63, target: 64 },
+			         { source: 17, target: 65 },
+			         { source: 65, target: 66 }
+		]};
+		var force = d3.layout.force()
+						.nodes(dataset.nodes)
+						.links(dataset.edges)
+						.size([w, h])
+						.linkDistance([100])
+						.charge([-150])
+						.start();
+
+		//var colors = d3.scale.category10();
+		var colors = d3.scale.ordinal()
+						.domain(["orange", "black", "blue", "green", "yellow"])
+    					.range(["#D95700", "#000000" , "#0095E6", "#00B300", "#FFD900"]);
+
+		var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+		var edges = svg.selectAll("line")
+						.data(dataset.edges)
+						.enter()
+						.append("line")
+						.style("stroke", "#ccc")
+						.style("stroke-width", 1);
+		var nodes = svg.selectAll("circle")
+						.data(dataset.nodes)
+						.enter()
+						.append("circle")
+						.attr("r", 10)
+						.style("fill", function(d, i){
+							return colors(d.group);
+						})
+						.call(force.drag);
+            
+		var label = svg.selectAll(".mytext")
+						.data(dataset.nodes)
+						.enter()
+						.append("text")
+					    .text(function (d) { return d.name; })
+					    .style("text-anchor", "middle")
+					    .style("fill", "#555")
+					    .style("font-family", "Arial")
+					    .style("font-size", 12);
+		
+		 
+
+		force.on("tick", function(){
+			edges.attr("x1", function(d){ return d.source.x; })
+				 .attr("y1", function(d){ return d.source.y; })
+				 .attr("x2", function(d){ return d.target.x; })
+				 .attr("y2", function(d){ return d.target.y; });
+			nodes.attr("cx", function(d){ return d.x; })
+				 .attr("cy", function(d){ return d.y; });
+			label.attr("x", function(d){ return d.x; })
+    			 .attr("y", function (d) {return d.y - 10; });
+
+			
+		});
+
+    </script>
+  </body>
+</html>
