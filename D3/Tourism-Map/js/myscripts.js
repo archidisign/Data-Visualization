@@ -13,13 +13,13 @@ var tip = d3.tip()
   })
 
 function ld1(){
-  deffile = "/data/arrivals_R.csv"
-  defColor = '#000033'
+  deffile = "./data/arrivals_R.csv"
+  defColor = '#6b6ecf'
   setMap();
 }
 function ld2(){
-  deffile = "/data/departures_R.csv"
-  defColor = '#e59400'
+  deffile = "./data/departures_R.csv"
+  defColor = '#fd8d3c'
   setMap();
 }
 
@@ -66,7 +66,7 @@ function setMap() {
 
 function loadData() {
   queue()   
-    .defer(d3.json, "/data geo/world-topo.json")  
+    .defer(d3.json, "./data geo/world-topo.json")  
     .defer(d3.csv, deffile)  
     .await(processData);   
                            

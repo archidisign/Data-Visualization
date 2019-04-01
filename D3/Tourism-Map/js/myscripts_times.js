@@ -3,14 +3,16 @@ var width, height, projection, path, graticule, svg, attributeArray = [], curren
 var width = 1500, height = 500;
 
 var deffile;
-var color = d3.scale.category20b();
+var color;
 
 function ld1(){
-  deffile = "/data/arrival_rev.csv"
+  deffile = "./data/arrival_top10.csv"
+  color =  d3.scale.category20b()
   start();
 }
 function ld2(){
-  deffile = "/data/departure_rev.csv"
+  deffile = "./data/departure_top10.csv"
+  color =  d3.scale.category20c();
   start();
 }
 
@@ -52,7 +54,7 @@ function start() {
     }
     
     var layout = {
-      title: 'Arrival and Departure dataset from 1995 to 2016 for All Countries with Rangeslider',
+      title: 'Top 10 Countries with the Most Arrival and Departure from 1995 to 2016',
       xaxis: {
         autorange: true,
         range: ['1995', '2016'],

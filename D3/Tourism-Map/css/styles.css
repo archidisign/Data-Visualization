@@ -22,26 +22,26 @@
 }
 
 #arrival {
-  background-color: #000033; /* Blue */
+  background-color: #6b6ecf; /* Blue */
 }
 #departure {
-  background-color: #e59400; /* Orange */
+  background-color: #fd8d3c; /* Orange */
 }
 
 .desc {
     width: 80%;
-    height: 200px;
+    height: 150px;
     margin: auto;
     padding: 10px;
 }
 .desc_left {
     width: 15%;
-    height: 200px;
+    height: 150px;
     float: left;
 }
 .btn-group {
     margin-left: 15%;
-    height: 200px;
+    height: 150px;
 }
 
 .stroke {
