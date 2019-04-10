@@ -6,9 +6,17 @@
 - Timestamp are by EST
 
 ## The visualizations
+### Final Visualization
 ![alt text](./preview.PNG)
+
+### Time Series in Flourish
 ![alt text](./time-series.PNG)
+
+### Pie Chart in Flourish
 ![alt text](./pie-chart.PNG)
+
+### Bar Chart Race in Flourish
+![alt text](./bar-chart-race.gif)
 
 ## Notes about the show
 ### The Tonight Show Starring Jimmy Fallon
